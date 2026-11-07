@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Повторяющиеся события — Moscow Events</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>Повторяющиеся события</h1>
+      <p class="subtitle">
+        Создание серии событий по шаблону с заданным интервалом и количеством повторений.
+        Перед сохранением показывается расчётное расписание и проверка каждой операции на сервере.
+      </p>
+    </header>
+
+    <main>
+      <div id="status-banner" class="banner hidden"></div>
+
+      <div class="layout">
+        <form id="template-form" class="card">
+          <fieldset>
+            <legend>Серия</legend>
+            <label>Название серии
+              <input name="series_name" required minlength="1" maxlength="200" value="Городские вечера">
+            </label>
+            <label>Описание серии
+              <textarea name="series_description" maxlength="2000" rows="2"></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Шаблон события</legend>
+            <label>Название события
+              <input name="title" required minlength="1" maxlength="250" value="Вечерний концерт">
+            </label>
+            <label>Артист <select name="artist_id" required></select></label>
+            <label>Площадка <select name="venue_id" required></select></label>
+            <label>Жанр <select name="genre_code" required></select></label>
+            <label>Возрастная категория <select name="age_rating" required></select></label>
+            <div class="row">
+              <label>Цена, ₽
+                <input name="price_rub" type="number" min="0" step="1" required value="1500">
+              </label>
+              <label>Квота билетов
+                <input name="ticket_quota" type="number" min="1" step="1" required value="100">
+              </label>
+            </div>
+            <label>Статус
+              <select name="status" required>
+                <option value="draft">draft — черновик</option>
+                <option value="published" selected>published — опубликовано</option>
+                <option value="cancelled">cancelled — отменено</option>
+                <option value="archived">archived — архив</option>
+              </select>
+            </label>
+            <label>Описание события
+              <textarea name="description" maxlength="2000" rows="2"></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Расписание</legend>
+            <label>Первое событие начинается (МСК)
+              <input name="starts_at" type="datetime-local" required>
+            </label>
+            <label>Длительность события, минут
+              <input name="duration_minutes" type="number" min="1" step="1" required value="120">
+            </label>
+            <div class="row">
+              <label>Интервал
+                <input name="interval_amount" type="number" min="1" step="1" required value="1">
+              </label>
+              <label>Единица
+                <select name="interval_unit" required>
+                  <option value="days">дней</option>
+                  <option value="weeks" selected>недель</option>
+                  <option value="months">месяцев</option>
+                </select>
+              </label>
+              <label>Количество
+                <input name="repeat_count" type="number" min="1" max="200" step="1" required value="4">
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="actions">
+            <button type="button" id="preview-btn" class="primary">Показать расписание</button>
+          </div>
+        </form>
+
+        <section id="preview" class="card hidden">
+          <h2>Расписание</h2>
+          <p id="preview-summary" class="summary"></p>
+          <div id="preview-errors" class="errors hidden"></div>
+          <ol id="preview-list" class="schedule"></ol>
+          <div class="actions">
+            <button type="button" id="save-btn" class="primary" disabled>Сохранить серию</button>
+            <button type="button" id="reset-btn">Сбросить</button>
+          </div>
+          <p id="save-result" class="result hidden"></p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <span>Бэкенд: <a href="https://github.com/nelkor/moscow-events" target="_blank" rel="noopener">nelkor/moscow-events</a></span>
+      <span>API: <a href="/docs" target="_blank" rel="noopener">Swagger UI</a></span>
+      <span><a href="/redoc" target="_blank" rel="noopener">ReDoc</a></span>
+      <span><a href="/openapi.json" target="_blank" rel="noopener">OpenAPI</a></span>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
